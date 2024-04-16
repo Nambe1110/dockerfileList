@@ -1,0 +1,36 @@
+---
+version: '3.7'
+name: norlys_migration
+
+services: 
+  pgsql:
+    image: bitnami/postgresql:14
+    user: root
+    environment:
+      - POSTGRESQL_PASSWORD=Jt3B99Duv6K3nsvm
+      - POSTGRESQL_POSTGRES_PASSWORD=Jt3B99Duv6K3nsvm
+      - POSTGRESQL_SHARED_PRELOAD_LIBRARIES=pgaudit, pg_stat_statements 
+      - POSTGRESQL_TIMEZONE=Europe/Copenhagen
+      - POSTGRESQL_LOG_TIMEZONE=Europe/Copenhagen
+      - TZ=Europe/Copenhagen
+      - PGTZ=Europe/Copenhagen
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres.conf:/bitnami/postgresql/conf/conf.d/postgres.conf:ro
+      - postgres-db:/bitnami/postgresql/data
+      
+  grafana:
+    image: grafana/grafana-enterprise
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana:/var/lib/grafana
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  postgres-db:
+    driver: local
+  grafana_data:
+    driver: local
+  
