@@ -4,7 +4,7 @@ name: norlys_migration
 
 services: 
   pgsql:
-    image: localhost:5000/dax/postgresql-14
+    image: bitnami/postgresql:16
     user: root
     environment:
       - POSTGRESQL_PASSWORD=Jt3B99Duv6K3nsvm
