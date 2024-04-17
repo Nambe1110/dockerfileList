@@ -19,6 +19,12 @@ services:
     volumes:
       - ./postgres.conf:/bitnami/postgresql/conf/conf.d/postgres.conf:ro
       - postgres-db:/bitnami/postgresql/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5432"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
       
   grafana:
     image: grafana/grafana-oss
@@ -27,6 +33,12 @@ services:
     volumes:
       - ./grafana:/var/lib/grafana
       - grafana_data:/var/lib/grafana
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
 volumes:
   postgres-db:
